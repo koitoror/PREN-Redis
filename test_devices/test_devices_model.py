@@ -23,9 +23,9 @@ class TestDevicesModel(BaseTestCase):
             )
             device.save()
 
-    def test_device_creation_with_tpe_empty(self):
+    def test_device_creation_with_the_device_type_empty(self):
         """
-        Test room creation with device type field empty
+        Test device creation with device type field empty
         """
         with self.assertRaises(AttributeError):
             device = Devices(
