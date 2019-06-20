@@ -10,7 +10,7 @@ class TestDevicesModel(BaseTestCase):
 
     def test_device_creation_with_name_empty(self):
         """
-        Test room creation with name field empty
+        Test device creation with name field empty
         """
         with self.assertRaises(AttributeError):
             device = Devices(
