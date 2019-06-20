@@ -164,7 +164,6 @@ update_device_query = '''
             }
 '''
 
-
 expected_update_device_response = {
     "data": {
         "updateDevice": {
@@ -209,7 +208,6 @@ delete_device_query = '''
 '''
 
 delete_device_response = {
-
   "data": {
     "deleteDevice": {
       "device": {
