@@ -279,15 +279,11 @@ class Query(graphene.ObjectType):
         PaginateEvents,
         start_date=graphene.String(),
         end_date=graphene.String(),
-        page=graphene.Int(),
-        per_page=graphene.Int(),
         description="Query that returns a list of events given the arguments\
             \n- start_date: The date and time to start selection \
                             when filtering by time period\
             \n- end_date: The date and time to end selection \
-                            when filtering by time period\
-            \n- page: Page number to select when paginating\
-            \n- per_page: The maximum number of pages per page when paginating")
+                            when filtering by time period")
 
     all_events = graphene.Field(
         PaginatedDailyRoomEvents,
