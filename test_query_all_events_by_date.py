@@ -13,7 +13,13 @@ from fixtures.events.events_query_by_date_fixtures import (
     query_events_invalid_page,
     event_query_invalid_page_response,
     query_events_invalid_per_page,
-    event_query_invalid_per_page_response
+    event_query_invalid_per_page_response,
+    query_events_without_start_date,
+    event_query_without_start_date_response,
+    query_events_without_end_date,
+    event_query_without_end_date_response,
+    query_events_without_start_and_end_date,
+    event_query_without_start_and_end_date_response
 )
 
 
@@ -48,6 +54,39 @@ class TestEventsQuery(BaseTestCase):
             self,
             query_events_with_pagination,
             event_query_with_pagination_response
+        )
+
+    def test_query_events_without_start_date(self):
+        """
+        Test a user can query for all events with
+        start date ahead of end date
+        """
+        CommonTestCases.admin_token_assert_equal(
+            self,
+            query_events_without_start_date,
+            event_query_without_start_date_response
+        )
+
+    def test_query_events_without_end_date(self):
+        """
+        Test a user can query for all events with
+        start date ahead of end date
+        """
+        CommonTestCases.admin_token_assert_equal(
+            self,
+            query_events_without_end_date,
+            event_query_without_end_date_response
+        )
+
+    def test_query_events_without_start_and_end_date(self):
+        """
+        Test a user can query for all events with
+        start date ahead of end date
+        """
+        CommonTestCases.admin_token_assert_equal(
+            self,
+            query_events_without_start_and_end_date,
+            event_query_without_start_and_end_date_response
         )
 
     def test_query_events_missing_per_page(self):
