@@ -14,8 +14,8 @@ from helpers.calendar.credentials import get_single_calendar_event
 from helpers.pagination.paginate import ListPaginate
 from helpers.devices.devices import update_device_last_seen
 from helpers.events_filter.events_filter import (
-    sort_events_by_date_range,
-    format_range_dates
+    filter_events_by_date_range,
+    validate_page_and_per_page
 )
 
 utc = pytz.utc
@@ -259,34 +259,18 @@ class Query(graphene.ObjectType):
         end_date = kwargs.get('end_date')
         page = kwargs.get('page')
         per_page = kwargs.get('per_page')
-        if start_date and not end_date:
-            raise GraphQLError("endDate argument missing")
-        if end_date and not start_date:
-            raise GraphQLError("startDate argument missing")
-        if page is not None and page < 1:
-            raise GraphQLError("page must be at least 1")
-        if per_page is not None and per_page < 1:
-            raise GraphQLError("perPage must be at least 1")
-        if page and not per_page:
-            raise GraphQLError("perPage argument missing")
-        if per_page and not page:
-            raise GraphQLError("page argument missing")
-        # get all events by date range
+
+        page, per_page = validate_page_and_per_page(page, per_page)
+
         query = Events.get_query(info)
 
-        start_date, end_date = format_range_dates(
-            start_date, end_date
-        )
-
-        events = query.filter(
-            EventsModel.state == 'active',
-            EventsModel.start_time >= start_date,
-            EventsModel.end_time <= end_date
-        ).all()
-
-        response = sort_events_by_date_range(
-            events
+        response = filter_events_by_date_range(
+            query, start_date, end_date
             )
+
+        response.sort(
+            key=lambda x: parser.parse(x.start_time).astimezone(utc),
+            reverse=True)
 
         if not response:
             raise GraphQLError('Events do not exist for the date range')
