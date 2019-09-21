@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/koitoror/PREN-Redis#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "pg-promise": "^9.1.4",
+    "redis": "^2.8.0",
+    "response-time": "^2.3.2"
   }
 }
